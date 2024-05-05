@@ -16,11 +16,17 @@ import java.io.IOException;
  */
 public interface UserService extends IService<User> {
 
-    boolean saveUser(User user);
+    int saveUser(User user);
 
-   void saveUserFromExcel(MultipartFile file) throws IOException;
+   boolean saveUserFromExcel(MultipartFile file) throws IOException;
 
-    void updateUser(long job_id, User user);
+    void updateUser(String job_id, User user);
 
-    void deleteUser(long job_id);
+    void deleteUser(String job_id);
+
+    User findByJobID(String job_id);
+
+    int updatePasswordByJobID(String jobID, String newPwd);
+
+    String findPwdByJobID(String jobId);
 }

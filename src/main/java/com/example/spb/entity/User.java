@@ -37,7 +37,7 @@ public class User implements Serializable {
     /**
      * 工号/学号
      */
-    private long jobId;
+    private String jobId;
 
     /**
      * 用户密码
@@ -85,6 +85,10 @@ public class User implements Serializable {
      * 用户性别
      */
     private String sex;
+    /**
+     * 用户角色
+     */
+    private String role;
 
 
 }
