@@ -29,4 +29,8 @@ public interface UserService extends IService<User> {
     int updatePasswordByJobID(String jobID, String newPwd);
 
     String findPwdByJobID(String jobId);
+
+    int updateAvatarByJobID(String jobID, MultipartFile file) throws IOException;
+
+
 }

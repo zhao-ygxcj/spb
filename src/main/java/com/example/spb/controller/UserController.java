@@ -6,12 +6,19 @@ import com.example.spb.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * <p>
@@ -30,7 +37,7 @@ public class UserController {
 
 //    添加单个用户
     @PostMapping("/add")
-    @ApiOperation("添加单个用户")
+
     public ResponseEntity<Object> saveAdmin(@RequestBody User user) {
         System.out.print(user);
         int isSuccess = userService.saveUser(user);
@@ -41,12 +48,14 @@ public class UserController {
         }
     }
     @PostMapping("/test")
+    @ApiOperation("测试通路")
     public ResponseEntity<Object> test(){
         return ResponseEntity.ok("hello");
     }
 
 //    批量添加用户
     @PostMapping("/uploadAdminFile")
+    @ApiOperation("批量添加用户")
     public ResponseEntity<String> uploadUserFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("文件不能为空");
@@ -62,6 +71,7 @@ public class UserController {
 
 //    修改用户信息
     @PostMapping("/update")
+    @ApiOperation("修改用户信息")
     public ResponseEntity<String> updateUser(@RequestBody User user) {
         try {
             String job_id = user.getJobId();
@@ -74,6 +84,7 @@ public class UserController {
 
 //    删除用户信息
     @PostMapping("/delete")
+    @ApiOperation("删除用户信息")
     public ResponseEntity<String> deleteUser(@RequestParam("job_id") String job_id) {
         try {
             userService.deleteUser(job_id);
@@ -83,7 +94,9 @@ public class UserController {
         }
     }
 
+//    修改密码
     @PostMapping("/updatePassword")
+    @ApiOperation("修改密码")
     public ResponseEntity<String> updatePassword(@RequestParam("inputPwd") String inputPwd, @RequestParam("newPwd") String newPwd,@RequestBody User user) {
         try {
             String prePwd = userService.findPwdByJobID(user.getJobId());
@@ -100,7 +113,43 @@ public class UserController {
         }
     }
 
-
+//    上传/更新头像
+    @PostMapping("/uploadAvatar")
+    @ApiOperation("上传/更新头像")
+    public ResponseEntity<String> updateAvatar(@RequestParam("avatar") MultipartFile file,@RequestParam("job_id") String job_id) throws IOException {
+        if (file.isEmpty()){
+            return ResponseEntity.badRequest().body("请选择上传的文件");
+        }
+        else {
+                userService.updateAvatarByJobID(job_id,file);
+                return ResponseEntity.ok("文件上传成功");
+            }
+        }
+//    查询用户信息
+    @GetMapping("/query")
+    @ApiOperation("查询用户信息")
+    public ResponseEntity<Object> queryUser(@RequestParam("job_id") String job_id){
+        User user = userService.findByJobID(job_id);
+        if (user != null){
+            return ResponseEntity.ok(user);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    //    显示头像
+    @GetMapping("/queryAvatar")
+    @ApiOperation("显示头像")
+    public ResponseEntity<Object> queryAvatar(@RequestParam("job_id") String job_id) throws IOException {
+        User user = userService.findByJobID(job_id);
+        String avatar = user.getPortrait();
+        if (avatar != null){
+            byte[] avatarData = Files.readAllBytes(Paths.get(avatar));
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(avatarData);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    }
 
 
 
@@ -109,5 +158,4 @@ public class UserController {
 
 
 
-}
 

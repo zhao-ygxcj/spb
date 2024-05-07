@@ -10,6 +10,9 @@ spring:
 #  application:
 #    name: shiro
 
+upload:
+  dir:
+    avatar: src/main/resources/static/images/avatar
 
 mybatis-plus:
   configuration:

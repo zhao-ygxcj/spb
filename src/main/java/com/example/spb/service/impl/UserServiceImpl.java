@@ -10,9 +10,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private UserMapper userMapper;
+
+    @Value("${upload.dir.avatar}")
+    private String uploadDir;
 //    添加用户
     public int saveUser(User user){
         return userMapper.insert(user);
@@ -103,6 +108,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("job_id",job_id);
         return userMapper.selectOne(wrapper).getPassword();
+    }
+
+    @Override
+    public int updateAvatarByJobID(String jobID, MultipartFile file) throws IOException {
+        String filename = file.getOriginalFilename();
+        String path = uploadDir + File.separator + filename;
+        System.out.println(path);
+        File destfile = new File(path);
+//                 如果目录不存在，创建目录
+        if (!destfile.getParentFile().exists()) {
+            destfile.getParentFile().mkdirs();
+        }
+        file.transferTo(destfile.getAbsoluteFile());
+
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("job_id",jobID).set("portrait", path);
+        return userMapper.update(null, updateWrapper);
     }
 
 
