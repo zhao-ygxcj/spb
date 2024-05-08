@@ -7,6 +7,8 @@ import com.example.spb.entity.User;
 import com.example.spb.enums.ResponseCodeEnum;
 import com.example.spb.service.UserService;
 import com.example.spb.utils.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
@@ -27,6 +29,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/login")
+@Api("登录控制类")
 public class LoginController {
         @Autowired
         private UserService userService;
@@ -61,6 +64,7 @@ public class LoginController {
 //            return null;
 //        }
         @PostMapping("/jobIDLogin")
+        @ApiOperation("用户名密码登录")
         public ResponseEntity<Object> jobIDLogin(@RequestParam("job_id") String jobID, @RequestParam("password") String password,
                                       HttpServletRequest request, HttpServletResponse response) {
                 if (StringUtils.isAnyBlank(jobID, password)) {

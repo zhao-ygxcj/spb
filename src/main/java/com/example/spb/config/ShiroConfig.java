@@ -29,8 +29,9 @@ public class ShiroConfig {
         // 拦截器
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 //        map.put("/**", "anon");
-//        map.put("/user/*", "anon");
+        map.put("/user/*", "anon");
         map.put("/login/*","anon");
+        map.put("/sms/*","anon");
 
         map.put("/swagger-ui.html*", "anon");
         map.put("/v2/**", "anon");

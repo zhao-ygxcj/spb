@@ -37,7 +37,7 @@ public class UserController {
 
 //    添加单个用户
     @PostMapping("/add")
-
+    @ApiOperation("添加单一用户")
     public ResponseEntity<Object> saveAdmin(@RequestBody User user) {
         System.out.print(user);
         int isSuccess = userService.saveUser(user);
@@ -95,9 +95,9 @@ public class UserController {
     }
 
 //    修改密码
-    @PostMapping("/updatePassword")
-    @ApiOperation("修改密码")
-    public ResponseEntity<String> updatePassword(@RequestParam("inputPwd") String inputPwd, @RequestParam("newPwd") String newPwd,@RequestBody User user) {
+    @PostMapping("/updatePasswordByPrePwd")
+    @ApiOperation("通过原密码修改密码")
+    public ResponseEntity<String> updatePasswordByPrePwd(@RequestParam("inputPwd") String inputPwd, @RequestParam("newPwd") String newPwd,@RequestBody User user) {
         try {
             String prePwd = userService.findPwdByJobID(user.getJobId());
             if (!inputPwd.equals(prePwd)){
@@ -111,6 +111,19 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error update changepwd: " + e.getMessage());
         }
+    }
+    //    修改密码
+    @PostMapping("/updatePasswordByphone")
+    @ApiOperation("通过手机验证码修改密码")
+    public ResponseEntity<String> updatePasswordByPhone(@RequestParam("phone") String phone, @RequestParam("newPwd") String newPwd) {
+        try {
+            User user = userService.queryUserByPhone(phone);
+            String job_id = user.getJobId();
+            userService.updatePasswordByJobID(job_id,newPwd);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error update changepwd: " + e.getMessage());
+        }
+        return ResponseEntity.ok("Password updated successfully");
     }
 
 //    上传/更新头像
@@ -126,9 +139,9 @@ public class UserController {
             }
         }
 //    查询用户信息
-    @GetMapping("/query")
+    @GetMapping("/queryByJobID")
     @ApiOperation("查询用户信息")
-    public ResponseEntity<Object> queryUser(@RequestParam("job_id") String job_id){
+    public ResponseEntity<Object> queryUserByJobID(@RequestParam("job_id") String job_id){
         User user = userService.findByJobID(job_id);
         if (user != null){
             return ResponseEntity.ok(user);

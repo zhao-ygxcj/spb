@@ -127,5 +127,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.update(null, updateWrapper);
     }
 
+    @Override
+    public User queryUserByPhone(String phone) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("phone",phone);
+        return userMapper.selectOne(wrapper);
+    }
+
+
+
 
 }

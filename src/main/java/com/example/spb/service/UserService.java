@@ -33,4 +33,7 @@ public interface UserService extends IService<User> {
     int updateAvatarByJobID(String jobID, MultipartFile file) throws IOException;
 
 
+    User queryUserByPhone(String phone);
+
+
 }
