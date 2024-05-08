@@ -85,17 +85,17 @@ public class LoginController {
         }
 
 
-        @PostMapping("/phoneLogin")
-        public ResponseEntity<Object> phoneLogin(@RequestParam("job_id") String jobID, @RequestParam("password") String password,
-                                               HttpServletRequest request, HttpServletResponse response){
-
-
-        }
-
-        @PostMapping("/test")
-        public ResponseEntity<Object> test(){
-                return ResponseEntity.ok("hello");
-        }
+//        @PostMapping("/phoneLogin")
+//        public ResponseEntity<Object> phoneLogin(@RequestParam("job_id") String jobID, @RequestParam("password") String password,
+//                                               HttpServletRequest request, HttpServletResponse response){
+//
+//
+//        }
+//
+//        @PostMapping("/test")
+//        public ResponseEntity<Object> test(){
+//                return ResponseEntity.ok("hello");
+//        }
 
 
 }
