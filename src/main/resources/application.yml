@@ -16,6 +16,7 @@ spring:
         max-wait: -1
     password: ''
     port: 6379
+    timeout: 1000
 #  application:
 #    name: shiro
 
