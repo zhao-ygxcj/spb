@@ -65,14 +65,16 @@ public class LoginController {
 //        }
         @PostMapping("/jobIDLogin")
         @ApiOperation("用户名密码登录")
-        public ResponseEntity<Object> jobIDLogin(@RequestParam("job_id") String jobID, @RequestParam("password") String password,
-                                      HttpServletRequest request, HttpServletResponse response) {
+        public ResponseEntity<Object> jobIDLogin(@RequestParam("job_id") String jobID,
+                                                 @RequestParam("password") String password,
+                                                 HttpServletRequest request,
+                                                 HttpServletResponse response) {
                 if (StringUtils.isAnyBlank(jobID, password)) {
                         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("学号/工号和密码不能为空");
                 }
                 User user = userService.findByJobID(jobID);
                 if (user == null) {
-                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("用户不存在a");
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("用户不存在");
                 }
                 if (user!=null){
                         JwtUtil jwtUtil = new JwtUtil();
@@ -83,7 +85,6 @@ public class LoginController {
                         Map<String, String> map = new HashMap<>();
                         map.put("token", token);
                         return ResponseEntity.ok(map);
-//                        return Result.succ(ResponseCodeEnum.OK,"成功登录",map);
                 }
                 return null;
         }

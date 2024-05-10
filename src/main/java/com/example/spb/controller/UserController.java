@@ -109,9 +109,33 @@ public class UserController {
                 return ResponseEntity.ok("Password updated successfully");
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error update changepwd: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error update pwd: " + e.getMessage());
         }
     }
+
+    @PostMapping("/isBoundedPhone")
+    @ApiOperation("判断当前用户是否绑定了手机号")
+    public ResponseEntity<Boolean> isBoundedPhone(@RequestParam("jobID") String jobID){
+        try {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userService.isPhoneBounded(jobID));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(!userService.isPhoneBounded(jobID));
+        }
+
+    }
+
+    //    绑定手机号
+    @PostMapping("/boundPhoneNumber")
+    @ApiOperation("绑定手机号")
+    public ResponseEntity<String> boundPhoneNumber(@RequestParam("phone") String phone, @RequestParam("jobID") String jobID) {
+        try {
+            userService.boundPhoneNumber(jobID,phone);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error bound phone " + e.getMessage());
+        }
+        return ResponseEntity.ok(" phone bounded successfully");
+    }
+
     //    修改密码
     @PostMapping("/updatePasswordByphone")
     @ApiOperation("通过手机验证码修改密码")
@@ -121,7 +145,7 @@ public class UserController {
             String job_id = user.getJobId();
             userService.updatePasswordByJobID(job_id,newPwd);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error update changepwd: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error update pwd: " + e.getMessage());
         }
         return ResponseEntity.ok("Password updated successfully");
     }

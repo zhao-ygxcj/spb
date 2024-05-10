@@ -134,7 +134,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.selectOne(wrapper);
     }
 
+    @Override
+    public Boolean isPhoneBounded(String jobID) {
+        QueryWrapper<User> wrapper = new QueryWrapper();
+        wrapper.eq("job_id",jobID);
+        if (userMapper.selectOne(wrapper).getPhone() == null){
+            return false;
+        }else {
+            return true;
+        }
+    }
 
+    public void boundPhoneNumber(String job_id, String phone) {
+        UpdateWrapper<User> wrapper = new UpdateWrapper();
+        wrapper.eq("job_id",job_id).set("phone",phone);
+        userMapper.update(null,wrapper);
+    }
 
 
 }

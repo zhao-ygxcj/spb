@@ -8,7 +8,13 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.example.spb.service.SmsLoginService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Component;
 
+//@Component
 public class SendSMSUtil {
     /**
      * 你的accessKeyId
@@ -30,6 +36,9 @@ public class SendSMSUtil {
      * 验证码
      */
     private static int code;
+
+//    @Autowired
+    private static SmsLoginService smsLoginService;
 
     /**
      * @Descirption:发送手机验证码
@@ -99,4 +108,9 @@ public class SendSMSUtil {
     public static int getCode(){
         return code;
     }
+
+
+//    public static boolean verify(String phoneNumber, Integer smsCode) {
+//        return smsLoginService.verifyCode(phoneNumber,smsCode);
+//    }
 }

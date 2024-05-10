@@ -44,10 +44,26 @@ public class User implements Serializable {
      */
     private String password;
 
+    public String getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     /**
      * 用户手机号
      */
-    private long phone;
+    private String phone;
 
     /**
      * 所属支部

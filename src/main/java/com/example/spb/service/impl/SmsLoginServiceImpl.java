@@ -29,4 +29,14 @@ public class SmsLoginServiceImpl extends ServiceImpl<UserMapper, User> implement
 
         return "OK";
     }
+    @Override
+    public boolean verifyCode(String phoneNumber, Integer smsCode){
+//        String code = stringRedisTemplate.opsForValue().get(phoneNumber);
+        String code = "685869";
+        if (String.valueOf(smsCode).equals(code)){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
