@@ -76,10 +76,6 @@ public class User implements Serializable {
      */
     private String name;
 
-    /**
-     * 身份证号
-     */
-    private String cardId;
 
     /**
      * 岗位
@@ -87,20 +83,10 @@ public class User implements Serializable {
     private String post;
 
     /**
-     * 绑定微信id
-     */
-    @TableField("Vx_id")
-    private String vxId;
-
-    /**
      * 用户头像
      */
     private String portrait;
 
-    /**
-     * 用户性别
-     */
-    private String sex;
     /**
      * 用户角色
      */

@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spb?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://47.121.129.207:3307/spb?serverTimezone=Asia/Shanghai
     username: root
-    password: 20010514
+    password: Gzzs0414
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

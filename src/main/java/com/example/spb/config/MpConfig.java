@@ -19,8 +19,8 @@ public class MpConfig {
         dataSourceConfig.setDbType(DbType.MYSQL);
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
         dataSourceConfig.setUsername("root");
-        dataSourceConfig.setPassword("20010514");
-        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/spb?useSSL=false&serverTimezone=GMT%2B8");
+        dataSourceConfig.setPassword("Gzzs0414");
+        dataSourceConfig.setUrl("jdbc:mysql://47.121.129.207:3307/spb?useSSL=false&serverTimezone=GMT%2B8");
         autoGenerator.setDataSource(dataSourceConfig);
 
         GlobalConfig globalConfig = new GlobalConfig();

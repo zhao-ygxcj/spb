@@ -34,6 +34,7 @@ public class ShiroConfig {
         map.put("/sms/*","anon");
 
         map.put("/swagger-ui.html*", "anon");
+        map.put("/favicon.ico*", "anon");
         map.put("/v2/**", "anon");
         map.put("/doc.html*","anon");
         map.put("/webjars/**","anon");
