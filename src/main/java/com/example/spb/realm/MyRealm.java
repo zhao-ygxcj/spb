@@ -11,19 +11,17 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MyRealm extends AuthorizingRealm {
-//    @Autowired
+
+    @Autowired
     private UserService userService;
+
     private JwtUtil jwtUtil;
     // 用户认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        // 将 AuthenticationToken 转换为 UsernamePasswordToken，以便获取用户名和密码
-
-//        String job_id = token.getUsername();
-//        String password = Arrays.toString(token.getPassword()); // 密码通常是 char[] 类型，而不是 String
-
 
         JwtToken jwtToken = (JwtToken) authenticationToken;
         String jwt = (String) jwtToken.getPrincipal();
@@ -31,7 +29,6 @@ public class MyRealm extends AuthorizingRealm {
         // 解析验证 JWT
         Claims claims = jwtUtil.getClaimsByToken(jwt);
         String job_id = claims.getSubject();
-//        String job_id = jwtUtil.getClaimValue(jwt,"jobID");
 
 
         // 根据用户名查询数据库中的用户信息

@@ -21,29 +21,32 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean filterFactoryBean(@Qualifier("manager") DefaultWebSecurityManager manager){
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(manager);
-        //权限设置
-        HashMap<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new JwtFilter());
-        factoryBean.setFilters(filterMap);
 
         // 拦截器
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 //        map.put("/**", "anon");
-        map.put("/user/*", "anon");
+//        map.put("/user/*", "anon");
         map.put("/login/*","anon");
         map.put("/sms/*","anon");
 
-        map.put("/swagger-ui.html*", "anon");
-        map.put("/favicon.ico*", "anon");
+        map.put("/swagger-ui.html", "anon");
+        map.put("/favicon.ico", "anon");
         map.put("/v2/**", "anon");
-        map.put("/doc.html*","anon");
+        map.put("/doc.html","anon");
         map.put("/webjars/**","anon");
         map.put("/swagger-resources/**","anon");
         map.put("/resources/**","anon");
         map.put("/configuration/**","anon");
 
-
         map.put("/**", "jwt");
+
+
+        //权限设置
+        HashMap<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("jwt", new JwtFilter());
+        factoryBean.setFilters(filterMap);
+
+
         factoryBean.setFilterChainDefinitionMap(map);
         return factoryBean;
     }
