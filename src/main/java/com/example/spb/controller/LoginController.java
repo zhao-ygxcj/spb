@@ -76,6 +76,9 @@ public class LoginController {
                 if (user == null) {
                         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("用户不存在");
                 }
+                if (!password.equals(user.getPassword())){
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("密码错误");
+                }
                 if (user!=null){
                         JwtUtil jwtUtil = new JwtUtil();
                         String token = jwtUtil.generateToken(jobID);

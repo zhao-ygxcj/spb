@@ -8,14 +8,14 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   redis:
-    host: 127.0.0.1
+    host: 47.95.178.128
     jedis:
       pool:
         max-active: 8
         max-idle: 8
         max-wait: -1
-    password: ''
-    port: 6379
+    password: 20010514zhao
+    port: 6380
     timeout: 1000
 #  application:
 #    name: shiro

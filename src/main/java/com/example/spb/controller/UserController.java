@@ -173,6 +173,17 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+    //    查询用户信息
+    @GetMapping("/queryByPhone")
+    @ApiOperation("查询用户信息")
+    public ResponseEntity<Object> queryUserByPhone(@RequestParam("phone") String phone){
+        User user = userService.queryUserByPhone(phone);
+        if (user != null){
+            return ResponseEntity.ok(user);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     //    显示头像
     @GetMapping("/queryAvatar")
     @ApiOperation("显示头像")

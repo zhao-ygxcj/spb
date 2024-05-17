@@ -19,11 +19,12 @@ public class SmsLoginServiceImpl extends ServiceImpl<UserMapper, User> implement
     @Override
     public String saveCodeToRedis(String phoneNumber, int code) {
 
-        Map<String,Object> map=new HashMap<>();
-        // 将数据存入redis
-        map.put(phoneNumber,code+"");
+//        Map<String,Object> map=new HashMap<>();
+//        // 将数据存入redis
+//        map.put(phoneNumber,code+"");
         //用phoneNumber来做键，可以做到唯一性
-        stringRedisTemplate.opsForHash().putAll(phoneNumber,map);
+        stringRedisTemplate.opsForValue().append(phoneNumber, String.valueOf(code));
+//        stringRedisTemplate.opsForHash().putAll(phoneNumber,map);
         // 设置redis过期时间,这个时间是秒为单位的，我现在设置5分钟之内有效，过了就会自动删除
         stringRedisTemplate.expire(phoneNumber, 60*5, TimeUnit.SECONDS);
 
