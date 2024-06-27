@@ -33,6 +33,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
+    @Value("${server.url}")
+    private String serverUrl;
+
+    @Value("${avatar.save.path}")
+    private String avatarPath;
+
     @Value("${upload.dir.avatar}")
     private String uploadDir;
 //    添加用户
@@ -143,6 +149,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }else {
             return true;
         }
+    }
+
+    @Override
+    public String getPortraitByJobId(String job_id) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("job_id",job_id);
+        String url = userMapper.selectOne(wrapper).getPortrait();
+        int lastSlashIndex = url.lastIndexOf("\\");
+        String name = " ";
+        if (lastSlashIndex != -1) {
+            name =  url.substring(lastSlashIndex);
+        }
+        String path = serverUrl + avatarPath + name;
+        return path;
     }
 
     public void boundPhoneNumber(String job_id, String phone) {

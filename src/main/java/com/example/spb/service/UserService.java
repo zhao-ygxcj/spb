@@ -2,7 +2,6 @@ package com.example.spb.service;
 
 import com.example.spb.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,6 +15,8 @@ import java.io.IOException;
  * @since 2024-04-29
  */
 public interface UserService extends IService<User> {
+
+    String getPortraitByJobId(String job_id);
 
     void boundPhoneNumber(String job_id, String phone) ;
 

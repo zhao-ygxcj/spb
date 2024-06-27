@@ -1,6 +1,6 @@
 package com.example.spb.controller;
 
-
+import java.nio.file.Path;
 import com.example.spb.entity.User;
 import com.example.spb.service.UserService;
 import io.swagger.annotations.Api;
@@ -34,6 +34,10 @@ import java.nio.file.Paths;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Value("${upload.dir.avatar}")
+    private String avatarStoragePath;
+
 
 //    添加单个用户
     @PostMapping("/add")
@@ -189,14 +193,18 @@ public class UserController {
     @ApiOperation("显示头像")
     public ResponseEntity<Object> queryAvatar(@RequestParam("job_id") String job_id) throws IOException {
         User user = userService.findByJobID(job_id);
-        String avatar = user.getPortrait();
+        String avatar = userService.getPortraitByJobId(job_id);
+
         if (avatar != null){
-            byte[] avatarData = Files.readAllBytes(Paths.get(avatar));
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(avatarData);
+            return ResponseEntity.ok().body(avatar);
+//            byte[] avatarData = Files.readAllBytes(Paths.get(avatar));
+//            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(avatarData);
         }else {
             return ResponseEntity.notFound().build();
         }
     }
+
+
     }
 
 

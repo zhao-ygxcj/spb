@@ -24,10 +24,11 @@ public class ShiroConfig {
 
         // 拦截器
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-//        map.put("/**", "anon");
-//        map.put("/user/*", "anon");
+        map.put("/**", "anon");
+        map.put("/user/*", "anon");
         map.put("/login/*","anon");
         map.put("/sms/*","anon");
+        map.put("/branch/*","anon");
 
         map.put("/swagger-ui.html", "anon");
         map.put("/favicon.ico", "anon");
@@ -38,7 +39,7 @@ public class ShiroConfig {
         map.put("/resources/**","anon");
         map.put("/configuration/**","anon");
 
-        map.put("/**", "jwt");
+//        map.put("/**", "jwt");
 
 
         //权限设置
